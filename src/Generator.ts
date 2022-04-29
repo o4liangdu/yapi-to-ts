@@ -771,7 +771,7 @@ export class Generator {
     // 接口注释
     const genComment = (genTitle: (title: string) => string) => {
       const {
-        enabled: isEnabled = true,
+        enabled: isEnabled = false,
         title: hasTitle = true,
         category: hasCategory = true,
         tag: hasTag = true,
@@ -889,8 +889,6 @@ export class Generator {
             ${genComment(title => `接口 ${title} 的 **请求配置的类型**`)}
             type ${requestConfigTypeName} = Readonly<RequestConfig<
               ${JSON.stringify(syntheticalConfig.mockUrl)},
-              ${JSON.stringify(syntheticalConfig.devUrl)},
-              ${JSON.stringify(syntheticalConfig.prodUrl)},
               ${JSON.stringify(extendedInterfaceInfo.path)},
               ${JSON.stringify(syntheticalConfig.dataKey) || 'undefined'},
               ${paramNameType},
@@ -901,8 +899,6 @@ export class Generator {
             ${genComment(title => `接口 ${title} 的 **请求配置**`)}
             const ${requestConfigName}: ${requestConfigTypeName} = ${COMPRESSOR_TREE_SHAKING_ANNOTATION} {
               mockUrl: mockUrl${categoryUID},
-              devUrl: devUrl${categoryUID},
-              prodUrl: prodUrl${categoryUID},
               path: ${JSON.stringify(extendedInterfaceInfo.path)},
               method: Method.${extendedInterfaceInfo.method},
               requestHeaders: ${JSON.stringify(
